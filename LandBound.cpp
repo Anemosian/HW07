@@ -81,7 +81,7 @@ float gauge2_height = 1;
 
 float gauge_width = 10;
 float gauge_maxheight = gauge_posy + 30;
-float gauge_fill = 2;
+float gauge_fill = 1;
 
 //scoring
 int p1life = 5;
@@ -155,7 +155,7 @@ void keyboard() {
 		{
 			if (rotAngle1 <= 180.0)
 			{
-				rotAngle1 += 1.0;
+				rotAngle1 += 0.5;
 			}
 		}
 
@@ -163,7 +163,7 @@ void keyboard() {
 		{
 			if (rotAngle1 >= 2)
 			{
-				rotAngle1 -= 1.0;
+				rotAngle1 -= 0.5;
 			}
 		}
 		if (GetAsyncKeyState(VK_F))
@@ -207,7 +207,7 @@ void keyboard() {
 		{
 			if (rotAngle2 >= 180.0)
 			{
-				rotAngle2 -= 1.0;
+				rotAngle2 -= 0.5;
 			}
 		}
 
@@ -215,7 +215,7 @@ void keyboard() {
 		{
 			if (rotAngle2 <= 360.0)
 			{
-				rotAngle2 += 1.0;
+				rotAngle2 += 0.5;
 			}
 		}
 		if (GetAsyncKeyState(VK_L))
@@ -232,7 +232,7 @@ void keyboard() {
 			storewind2 = windVelocity;
 			bullet2.x = tank2.x + (tank_width / 2);
 			bullet2.y = tank2.y + (tank_height / 2);
-			theta2 = (3.1415926 / 180) * (rotAngle2 - 180);
+			theta2 = (3.1415926 / 180) * (rotAngle2);
 			
 		}
 	}
@@ -404,8 +404,8 @@ void updateProjectileStateNumerical(float t, float dt) {
 		float prevposx1 = bullet1.x;
 		float prevposy1 = bullet1.y;
 
-		bullet1.x += cos(theta1)*(bullet1.x * dt + ((gauge1_height / 10) + windVelocity) * 0.5) ;
-		bullet1.y += sin(theta1)*(bullet1.y * dt + dt * dt * g * 0.5);
+		bullet1.x +=bullet1.x * dt + cos(theta1)*(((gauge1_height / 10) + windVelocity) * 0.5) ;
+		bullet1.y += bullet1.y * dt + sin(theta1)*( dt * dt * g * 0.5);
 		//bullet1.x += (bullet1.x + (bullet1.x - prevposx1)*(dt / prevdt) + (t - pprevtime)*(t - prevtime)*((gauge1_height / 10) + windVelocity) * 0.5);
 		//bullet1.y += (bullet1.y + (bullet1.y - prevposy1)*(dt / prevdt) + (t - pprevtime)*(t - prevtime)*(g)* 0.5);
 	}
@@ -497,7 +497,7 @@ void draw() {
 
 
 	//score display
-	textDraw(width / 2 - 30, height - 30, inttostr(rotAngle1) + " " + inttostr(p1life) + " : " + inttostr(p2life) + " " + inttostr(abs(rotAngle2 - 360)));
+	textDraw(width / 2 - 141, height - 30, "Angle: " + inttostr(rotAngle1) + " " + "Life: " + inttostr(p1life) + " || " + "Life: " + inttostr(p2life) + " " + "Angle: " + inttostr(abs(rotAngle2 - 360)));
 	textDraw(width / 2, height - 50, inttostr(windVelocity));
 	//swapping buffers
 	glutSwapBuffers();
